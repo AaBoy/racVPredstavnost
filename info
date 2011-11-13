@@ -1,0 +1,16 @@
+translacija:
+
+glTranslate -podaš koordinate postaviš tam kjer boš tam, 0,0,z, naprej ali nazaj (pogled) + odalji, -približiza y levo desno, x gor dol, z okoli
+
+glRotate - rotiraš okoli x osi (alfa,0,0))
+
+
+prvo rotiraš, potem odstraniš
+
+
+poenostaviš lookat postaviš položaj kamere in točka kam je kamera obrjena
+
+bolj enostavno 
+
+
+upo br8394
