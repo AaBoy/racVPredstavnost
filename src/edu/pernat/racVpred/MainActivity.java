@@ -10,7 +10,7 @@ public class MainActivity extends AndroidApplication {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);     
         initialize(new MyFirstTriangle(), false);   
     }
 }

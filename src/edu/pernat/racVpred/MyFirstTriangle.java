@@ -3,11 +3,15 @@ package edu.pernat.racVpred;
 
 
 
+
 import android.util.Log;
+
 
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Music;
 
 import com.badlogic.gdx.graphics.Color;
@@ -17,24 +21,26 @@ import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 
 /*
  * pomagal iz strani: http://code.google.com/p/libgdx/wiki/OrthographicCamera
  * http://code.google.com/p/libgdx/wiki/ProjectionViewportCamera
- * http://code.google.com/p/libgdx/wiki/OrthographicCamera
+ * 
  * 
  * 
  * */
-public class MyFirstTriangle  implements ApplicationListener {
+public class MyFirstTriangle  implements ApplicationListener, InputProcessor {
 	 private Mesh[] faces;
 	  private PerspectiveCamera camera;
-	 
+	  private int stevec=0;
+	  public final String NaslovGlasbe[]={"a_je_to.mp3","smb_overworld.mp3","family_guy_sound.mp3","craig_ferguson_short.mp3"};
 	  Music music;
 	  public void create() {
-			music = Gdx.audio.newMusic(Gdx.files.internal("a_je_to1.mp3"));
-			music.setLooping(true);
-			music.setVolume(0.0001f);
-			music.play();
+//			music = Gdx.audio.newMusic(Gdx.files.internal(NaslovGlasbe[stevec]));
+//			music.setLooping(true);
+//			music.setVolume(0.1f);
+//			music.play();
 			
 		  
 		  if (faces == null) {
@@ -86,6 +92,13 @@ public class MyFirstTriangle  implements ApplicationListener {
 		    }
 		 
 		    Gdx.gl.glEnable(GL10.GL_DEPTH_TEST);
+		    
+		    
+		    Gdx.input.setInputProcessor((InputProcessor) this);
+	        Gdx.input.setCatchBackKey(true);
+	        
+	        
+
 		  }
 		 
 		  
@@ -99,7 +112,7 @@ public class MyFirstTriangle  implements ApplicationListener {
 		  
 		  public void render() {
   
-			  
+			  //camera.lookAt(0, 0, 0);
 			  
 		    if (Gdx.input.justTouched()) {
 		    	
@@ -111,28 +124,39 @@ public class MyFirstTriangle  implements ApplicationListener {
 		    if((lastTouchX > 120 && lastTouchX<360) && lastTouchY<200)
 		    {
 		    	
-//		    	camera.rotate(10, 0, -0.01f, 0);
+		    	
 		    	camera.translate(0, -0.01f, 0);
-		    	camera.lookAt(0, 0, 0);
+		    	camera.rotate(10, 0, 0.01f, 0);
 		    	   Log.e("Smer", "gor");
+		    	   Log.e("Smer", camera.position.toString());
 		    	//gor
 		    }
 		    else if((lastTouchX > 120 && lastTouchX<360) && (lastTouchY>600 && lastTouchY<800))
 		    {
-		    	
-//		    	camera.rotate(10, 0, +0.01f, 0);
+//		    	camera.translate(0, +0.01f, 0);
+//		    	camera.rotate(1, 0.1f, 0, 0);
 		    	camera.translate(0, +0.01f, 0);
 		    	camera.lookAt(0, 0, 0);
 		    	Log.e("Smer", "dol");
+		    	Log.e("Smer", camera.position.toString());
 		    	//dol
 		    }
 		    else if((lastTouchX < 120) && (lastTouchY>200 && lastTouchY<600))
 		    {
 		    	
-		    	//camera.rotate(10, -0.01f,0,  0);
-		    	camera.translate(-0.01f, 0, 0);
+		    	//camera.rotate(5, -0.01f,0,  0);
+//		    	camera.translate(-0.01f, 0, -0.01f);
 		    	camera.lookAt(0, 0, 0);
-		    	Log.e("Smer", "levo");
+		    	 camera.translate(-0.1f, 0, 0f);
+		         //camera.view.scale(0.5f, 0.5f, 0.5f);
+		         //camera.rotate(0.025f, 0, 0, 1);
+
+		         float x=0,y=0;
+		         camera.rotate(0.25f,  1, y, x);
+		         Log.e("Smer", camera.position.toString());
+		        
+		    	
+		    	
 		    	//levo
 		    }
 		    else if((lastTouchX > 360 && lastTouchX<4800) && (lastTouchY>200 && lastTouchY<600))
@@ -142,6 +166,7 @@ public class MyFirstTriangle  implements ApplicationListener {
 		    	camera.translate(0.01f, 0, 0);
 		    	camera.lookAt(0, 0, 0);
 		    	Log.e("Smer", "desno");
+		    	Log.e("Smer", camera.position.toString());
 		    	//		    	n+=0.01f;
 //		    	if(n>0.4f)
 //		    	{
@@ -160,12 +185,9 @@ public class MyFirstTriangle  implements ApplicationListener {
 		    		camera.lookAt(0f, 0f, 0.4f);
 		    	}
 		    	Log.e("Smer", "noter");
+		    	Log.e("Smer", camera.position.toString());
 		    	//noter
-		    } 
-		      
-		      lastTouchX = Gdx.input.getX();
-		      
-		      lastTouchY = Gdx.input.getY(); 
+		    }  
 		    }
 		 
 		   
@@ -173,13 +195,14 @@ public class MyFirstTriangle  implements ApplicationListener {
 		    camera.apply(Gdx.gl10);
 		 
 		    Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT| GL10.GL_DEPTH_BUFFER_BIT);
+		    Gdx.gl.glEnable(GL10.GL_DEPTH_TEST);
 		 
 		    for (Mesh face : faces) {
 		      face.render(GL10.GL_TRIANGLE_STRIP, 0, 4);
 		      
 		    }
 		    try {
-		      Thread.sleep(6); // ~60FPS
+		      Thread.sleep(16); // ~60FPS
 		    } catch (InterruptedException e) {
 		    }
 		  }
@@ -189,20 +212,88 @@ public class MyFirstTriangle  implements ApplicationListener {
 		    float aspectRatio = (float) width / (float) height;
 		    camera = new PerspectiveCamera(67, 2f * aspectRatio, 2f);
 		    
-		    camera.near = 0.1f;
-		    camera.far=10f;
+		    camera.near = 0.3f;
+		    camera.far=8f;
 		    camera.position.x=0f;
 			camera.position.y=0f;
 			camera.position.z=2f;
-		    camera.translate(0, 0, 0);
+		    //camera.translate(0, 0, 0);
 		    camera.update();
 		  }
 		 
 		  
 		  public void pause() { }
-		 
+		  
+		  public boolean keyDown(int keycode) {
+		        if(keycode == Keys.BACK){
+		        	music.stop();
+		        	music.dispose();
+		        	if(stevec!=3)
+		        	{
+		        		stevec++;
+		        	}else
+		        		stevec=0;
+		        	music = Gdx.audio.newMusic(Gdx.files.internal(NaslovGlasbe[stevec]));
+					music.setLooping(true);
+					music.setVolume(0.1f);
+					music.play();
+					
+		        }
+		        else if(keycode == Keys.VOLUME_UP)
+		        {
+		        	
+					camera.update();
+		        }
+		        return false;
+		   }
+
 		  
 		  public void dispose() { }
+
+
+		public boolean keyTyped(char arg0) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+
+		public boolean keyUp(int arg0) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+
+		public boolean scrolled(int arg0) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+
+		public boolean touchDown(int arg0, int arg1, int arg2, int arg3) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+
+		public boolean touchDragged(int arg0, int arg1, int arg2) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+
+		public boolean touchMoved(int arg0, int arg1) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+
+		public boolean touchUp(int arg0, int arg1, int arg2, int arg3) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+
+
 	}
 	
 	
