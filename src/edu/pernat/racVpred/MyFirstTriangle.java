@@ -21,6 +21,7 @@ import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 
 /*
@@ -37,10 +38,10 @@ public class MyFirstTriangle  implements ApplicationListener, InputProcessor {
 	  public final String NaslovGlasbe[]={"a_je_to.mp3","smb_overworld.mp3","family_guy_sound.mp3","craig_ferguson_short.mp3"};
 	  Music music;
 	  public void create() {
-//			music = Gdx.audio.newMusic(Gdx.files.internal(NaslovGlasbe[stevec]));
-//			music.setLooping(true);
-//			music.setVolume(0.1f);
-//			music.play();
+			music = Gdx.audio.newMusic(Gdx.files.internal(NaslovGlasbe[stevec]));
+			music.setLooping(true);
+			music.setVolume(0.05f);
+			music.play();
 			
 		  
 		  if (faces == null) {
@@ -125,9 +126,10 @@ public class MyFirstTriangle  implements ApplicationListener, InputProcessor {
 		    {
 		    	
 		    	
-		    	camera.translate(0, -0.01f, 0);
-		    	camera.rotate(10, 0, 0.01f, 0);
-		    	   Log.e("Smer", "gor");
+		    	camera.translate(0, -0.1f, 0);
+		    	//camera.rotate(10, 0, 0.01f, 0);
+		    	camera.lookAt(0, 0, 0);   
+		    	
 		    	   Log.e("Smer", camera.position.toString());
 		    	//gor
 		    }
@@ -135,7 +137,7 @@ public class MyFirstTriangle  implements ApplicationListener, InputProcessor {
 		    {
 //		    	camera.translate(0, +0.01f, 0);
 //		    	camera.rotate(1, 0.1f, 0, 0);
-		    	camera.translate(0, +0.01f, 0);
+		    	camera.translate(0, +0.1f, 0);
 		    	camera.lookAt(0, 0, 0);
 		    	Log.e("Smer", "dol");
 		    	Log.e("Smer", camera.position.toString());
@@ -146,8 +148,9 @@ public class MyFirstTriangle  implements ApplicationListener, InputProcessor {
 		    	
 		    	//camera.rotate(5, -0.01f,0,  0);
 //		    	camera.translate(-0.01f, 0, -0.01f);
+		    	camera.translate(-0.1f, 0, 0f);
 		    	camera.lookAt(0, 0, 0);
-		    	 camera.translate(-0.1f, 0, 0f);
+		    	
 		         //camera.view.scale(0.5f, 0.5f, 0.5f);
 		         //camera.rotate(0.025f, 0, 0, 1);
 
@@ -163,7 +166,7 @@ public class MyFirstTriangle  implements ApplicationListener, InputProcessor {
 		    {
 		    	
 		    	//camera.rotate(10, 0.01f,0,  0);
-		    	camera.translate(0.01f, 0, 0);
+		    	camera.translate(0.1f, 0, 0);
 		    	camera.lookAt(0, 0, 0);
 		    	Log.e("Smer", "desno");
 		    	Log.e("Smer", camera.position.toString());
@@ -177,7 +180,7 @@ public class MyFirstTriangle  implements ApplicationListener, InputProcessor {
 		    }
 		    else if((lastTouchX > 120 && lastTouchX<360) && (lastTouchY>200 && lastTouchY<600))
 		    {
-		    	camera.translate(0, 0, -0.01f);
+		    	camera.translate(0, 0, -0.1f);
 		    	camera.lookAt(0f, 0f, 0.4f);
 		    	if(camera.position.z<-0.4 && noter !=true)
 		    	{
@@ -212,11 +215,12 @@ public class MyFirstTriangle  implements ApplicationListener, InputProcessor {
 		    float aspectRatio = (float) width / (float) height;
 		    camera = new PerspectiveCamera(67, 2f * aspectRatio, 2f);
 		    
-		    camera.near = 0.3f;
-		    camera.far=8f;
+		    
+		    camera.near = 1f;
+		    camera.far=100f;
 		    camera.position.x=0f;
 			camera.position.y=0f;
-			camera.position.z=2f;
+			camera.position.z=1.5f;
 		    //camera.translate(0, 0, 0);
 		    camera.update();
 		  }
@@ -235,14 +239,25 @@ public class MyFirstTriangle  implements ApplicationListener, InputProcessor {
 		        		stevec=0;
 		        	music = Gdx.audio.newMusic(Gdx.files.internal(NaslovGlasbe[stevec]));
 					music.setLooping(true);
-					music.setVolume(0.1f);
+					music.setVolume(0.05f);
 					music.play();
 					
 		        }
-		        else if(keycode == Keys.VOLUME_UP)
+		        else if(keycode == Keys.SEARCH)
 		        {
 		        	
+		        	
 					camera.update();
+				    camera.apply(Gdx.gl10);
+				    Log.d("tukaj", "sem notri");
+					 
+				    Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT| GL10.GL_DEPTH_BUFFER_BIT);
+				    Gdx.gl.glEnable(GL10.GL_DEPTH_TEST);
+				 
+				    for (Mesh face : faces) {
+				      face.render(GL10.GL_TRIANGLE_STRIP, 0, 4);
+				      
+				    }
 		        }
 		        return false;
 		   }
