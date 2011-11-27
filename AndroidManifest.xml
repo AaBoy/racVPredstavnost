@@ -12,20 +12,20 @@
         <activity
             android:label="@string/app_name"
             android:name=".MainActivity" 
-            android:screenOrientation="portrait">
-            
+            android:screenOrientation="portrait">      
             <intent-filter >
-               <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+            
         <activity
             android:label="@string/app_name"
-            android:name="dolocitveniActivity" >
+            android:name=".IzberiPogled" >
             <intent-filter >
                 
-
+  				
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -33,6 +33,22 @@
             android:screenOrientation="portrait"
             android:label="@string/app_name"
             android:name=".MyFirstTriangle" >
+            <intent-filter >
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+                 <activity
+            android:screenOrientation="portrait"
+            android:label="@string/app_name"
+            android:name=".MyFirstObject" >
+            <intent-filter >
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+                 <activity
+            android:screenOrientation="portrait"
+            android:label="@string/app_name"
+            android:name=".MyFirstAnimObject" >
             <intent-filter >
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

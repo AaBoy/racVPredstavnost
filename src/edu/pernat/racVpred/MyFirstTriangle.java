@@ -181,7 +181,7 @@ public class MyFirstTriangle  implements ApplicationListener, InputProcessor {
 		    else if((lastTouchX > 120 && lastTouchX<360) && (lastTouchY>200 && lastTouchY<600))
 		    {
 		    	camera.translate(0, 0, -0.1f);
-		    	camera.lookAt(0f, 0f, 0.4f);
+		    	camera.lookAt(0f, 0f, 0.0f);
 		    	if(camera.position.z<-0.4 && noter !=true)
 		    	{
 		    		noter=true;
@@ -246,18 +246,37 @@ public class MyFirstTriangle  implements ApplicationListener, InputProcessor {
 		        else if(keycode == Keys.SEARCH)
 		        {
 		        	
-		        	
+				    camera.position.x=0f;
+					camera.position.y=0f;
+					camera.position.z=1.5f;
+//					camera.view.setToLookAt(new Vector3(new float[]{0,0,1.5F}),new Vector3( new float[]{0,0,0}),new Vector3(new float[]{0,1,0F}));
+					camera.lookAt(0, 0, 0);
 					camera.update();
 				    camera.apply(Gdx.gl10);
 				    Log.d("tukaj", "sem notri");
 					 
 				    Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT| GL10.GL_DEPTH_BUFFER_BIT);
 				    Gdx.gl.glEnable(GL10.GL_DEPTH_TEST);
-				 
+				    noter=false;
 				    for (Mesh face : faces) {
 				      face.render(GL10.GL_TRIANGLE_STRIP, 0, 4);
 				      
 				    }
+		        }
+		        else if (keycode==Keys.MENU)
+		        {
+		        	camera.translate(0, 0, 0.1f);
+			    	camera.lookAt(0f, 0f, 0.0f);
+//			    	if(camera.position.z>0.4 && noter !=true)
+//			    	{
+//			    		noter=true;
+//			    		camera.lookAt(0f, 0f,0f);
+//			    		
+//			    	}
+			    	Log.e("Smer", "noter");
+			    	Log.e("Smer", camera.position.toString());
+			    	//noter
+		        	
 		        }
 		        return false;
 		   }

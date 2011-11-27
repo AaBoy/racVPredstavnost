@@ -5,15 +5,15 @@
     android:orientation="vertical" >
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/buttonAnimacija"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Perspektivno" android:onClick=""/>
+        android:text="Animacija"/>
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonObjekt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ortigonalno" />
+        android:text="Objekt"/>
 
 </LinearLayout>
